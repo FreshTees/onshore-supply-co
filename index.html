@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Onshore Supply Co.</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0D0905;
+    --ochre: #C8650A;
+    --red: #8B2500;
+    --gold: #D4A843;
+    --teal: #1E6B6B;
+    --cream: #F2EDE4;
+    --mid: #3D2800;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--black);
+    color: var(--cream);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    mix-blend-mode: normal;
+  }
+
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 0.08em;
+    color: var(--cream);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    align-items: center;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--cream);
+    text-decoration: none;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+
+  .nav-links a:hover { opacity: 1; }
+
+  .nav-cta {
+    font-size: 12px !important;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--black) !important;
+    background: var(--ochre);
+    padding: 10px 20px;
+    opacity: 1 !important;
+    border-radius: 2px;
+  }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('/mnt/user-data/uploads/uluru-ayers-rock-outback-australia.jpg');
+    background-size: cover;
+    background-position: center 40%;
+    filter: brightness(0.45);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 160px 48px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  .hero-h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(72px, 12vw, 140px);
+    line-height: 0.92;
+    letter-spacing: 0.01em;
+    color: var(--cream);
+    max-width: 800px;
+  }
+
+  .hero-h1 em {
+    font-style: normal;
+    color: var(--ochre);
+  }
+
+  .hero-bottom {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 0 48px 52px;
+  }
+
+  .hero-sub {
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--cream);
+    opacity: 0.8;
+    max-width: 420px;
+    font-weight: 300;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--ochre);
+    color: var(--cream);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 14px 28px;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: background 0.2s;
+  }
+
+  .btn-primary:hover { background: var(--red); }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--cream);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+
+  .btn-ghost:hover { opacity: 1; }
+
+  /* HERO IMAGE — full bleed below fold like Mammoth */
+  .hero-image-strip {
+    width: 100%;
+    height: 60vw;
+    max-height: 700px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .hero-image-strip img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+
+  /* TRUSTED BY */
+  .trusted {
+    background: var(--ochre);
+    padding: 22px 48px;
+    display: flex;
+    align-items: center;
+    gap: 48px;
+  }
+
+  .trusted-label {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--black);
+    opacity: 0.6;
+    white-space: nowrap;
+    font-weight: 500;
+  }
+
+  .trusted-items {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+
+  .trusted-item {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 15px;
+    letter-spacing: 0.06em;
+    color: var(--black);
+    opacity: 0.75;
+  }
+
+  /* STATEMENT — Merch Girls style */
+  .statement {
+    background: var(--black);
+    padding: 100px 48px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .statement-left h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 5vw, 62px);
+    line-height: 1.1;
+    color: var(--cream);
+    font-style: italic;
+  }
+
+  .statement-left h2 strong {
+    font-style: normal;
+    color: var(--ochre);
+  }
+
+  .statement-right p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--cream);
+    opacity: 0.7;
+    font-weight: 300;
+    margin-bottom: 24px;
+  }
+
+  .statement-right p:last-child { margin-bottom: 0; }
+
+  /* OUR WORK — Mammoth style with big bg text */
+  .work-section {
+    background: var(--cream);
+    padding: 80px 0 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .work-bg-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(100px, 18vw, 220px);
+    color: rgba(0,0,0,0.06);
+    letter-spacing: 0.02em;
+    line-height: 1;
+    position: absolute;
+    top: 20px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .work-header {
+    position: relative;
+    z-index: 2;
+    padding: 0 48px 48px;
+  }
+
+  .work-header p {
+    font-size: 14px;
+    color: var(--mid);
+    line-height: 1.6;
+    max-width: 500px;
+    opacity: 0.7;
+  }
+
+  .work-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3px;
+  }
+
+  .work-item {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 4/3;
+    cursor: pointer;
+  }
+
+  .work-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
+  }
+
+  .work-item:hover img { transform: scale(1.04); }
+
+  .work-item-label {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 20px 20px 16px;
+    background: linear-gradient(transparent, rgba(10,5,3,0.85));
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .work-item-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 0.04em;
+    color: var(--cream);
+  }
+
+  .work-item-tag {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+  }
+
+  /* HOW IT WORKS — Mammoth numbered rows */
+  .process {
+    background: var(--black);
+    padding: 100px 48px;
+  }
+
+  .section-eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ochre);
+    margin-bottom: 16px;
+    font-weight: 500;
+  }
+
+  .process h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 7vw, 80px);
+    line-height: 0.95;
+    color: var(--cream);
+    margin-bottom: 64px;
+    max-width: 500px;
+  }
+
+  .process-rows {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid rgba(242,237,228,0.1);
+  }
+
+  .process-row {
+    display: grid;
+    grid-template-columns: 80px 1fr 1fr;
+    gap: 32px;
+    align-items: start;
+    padding: 36px 0;
+    border-bottom: 1px solid rgba(242,237,228,0.1);
+  }
+
+  .process-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 52px;
+    color: var(--ochre);
+    line-height: 1;
+    opacity: 0.6;
+  }
+
+  .process-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 0.03em;
+    color: var(--cream);
+    padding-top: 8px;
+  }
+
+  .process-desc {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--cream);
+    opacity: 0.6;
+    font-weight: 300;
+    padding-top: 10px;
+  }
+
+  /* LANDSCAPE IMAGE BREAK */
+  .image-break {
+    height: 55vw;
+    max-height: 600px;
+    overflow: hidden;
+  }
+
+  .image-break img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+    display: block;
+    filter: brightness(0.85);
+  }
+
+  /* ABOUT STRIP */
+  .about-strip {
+    background: var(--black);
+    padding: 100px 48px;
+  }
+
+  .about-intro {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+    margin-bottom: 80px;
+    padding-bottom: 80px;
+    border-bottom: 1px solid rgba(242,237,228,0.1);
+  }
+
+  .about-strip h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(42px, 6vw, 80px);
+    line-height: 0.92;
+    color: var(--cream);
+    position: sticky;
+    top: 100px;
+  }
+
+  .about-strip h3 em {
+    font-style: normal;
+    color: var(--ochre);
+  }
+
+  .about-body p {
+    font-size: 16px;
+    line-height: 1.85;
+    color: var(--cream);
+    opacity: 0.75;
+    font-weight: 300;
+    margin-bottom: 28px;
+  }
+
+  .about-body p strong {
+    color: var(--cream);
+    opacity: 1;
+    font-weight: 500;
+  }
+
+  .about-body p:last-child { margin-bottom: 0; }
+
+  .about-fact-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3px;
+    margin-top: 0;
+  }
+
+  .about-fact {
+    background: var(--teal);
+    padding: 40px 36px;
+  }
+
+  .about-fact-label {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--cream);
+    opacity: 0.6;
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+
+  .about-fact-text {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(18px, 2.5vw, 26px);
+    line-height: 1.3;
+    color: var(--cream);
+    font-style: italic;
+  }
+
+  .about-mission {
+    background: var(--ochre);
+    padding: 40px 36px;
+  }
+
+  .about-mission-label {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--black);
+    opacity: 0.6;
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+
+  .about-mission-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(28px, 4vw, 48px);
+    line-height: 1.0;
+    color: var(--black);
+    letter-spacing: 0.02em;
+  }
+
+  /* CTA */
+  .cta-section {
+    background: var(--cream);
+    padding: 120px 48px;
+    text-align: center;
+  }
+
+  .cta-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(42px, 7vw, 88px);
+    color: var(--black);
+    line-height: 1.05;
+    margin-bottom: 20px;
+    font-style: italic;
+  }
+
+  .cta-section p {
+    font-size: 16px;
+    color: var(--mid);
+    opacity: 0.7;
+    margin-bottom: 40px;
+    font-weight: 300;
+  }
+
+  .btn-dark {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--black);
+    color: var(--cream);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 16px 36px;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: background 0.2s;
+  }
+
+  .btn-dark:hover { background: var(--red); }
+
+  /* FOOTER */
+  footer {
+    background: var(--black);
+    padding: 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(242,237,228,0.1);
+  }
+
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 0.08em;
+    color: var(--cream);
+  }
+
+  .footer-tagline {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ochre);
+    opacity: 0.8;
+  }
+
+  .footer-right {
+    font-size: 12px;
+    color: var(--cream);
+    opacity: 0.4;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">Onshore Supply Co.</a>
+  <ul class="nav-links">
+    <li><a href="#">How it works</a></li>
+    <li><a href="#">About</a></li>
+    <li><a href="#" class="nav-cta">Get in touch</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <h1 class="hero-h1">Merch<br><em>Made</em><br>Here.</h1>
+  </div>
+  <div class="hero-bottom">
+    <p class="hero-sub">Australia's managed service for organisations that need garments made locally — ethically sourced, expertly managed, genuinely onshore.</p>
+    <div class="hero-actions">
+      <a href="#" class="btn-primary">Tell us what you need →</a>
+      <a href="#" class="btn-ghost">See how it works ↓</a>
+    </div>
+  </div>
+</section>
+
+<!-- FULL BLEED IMAGE -->
+<div class="hero-image-strip">
+  <img src="/mnt/user-data/uploads/AdobeStock_177541984_750x500.jpg" alt="Australian made garment manufacturing">
+</div>
+
+<!-- TRUSTED BY -->
+<div class="trusted">
+  <span class="trusted-label">Trusted by</span>
+  <div class="trusted-items">
+    <span class="trusted-item">Schools &amp; Universities</span>
+    <span class="trusted-item">Sporting Clubs</span>
+    <span class="trusted-item">Not-for-profits</span>
+    <span class="trusted-item">Corporates</span>
+    <span class="trusted-item">Government</span>
+  </div>
+</div>
+
+<!-- STATEMENT -->
+<section class="statement">
+  <div class="statement-left">
+    <h2>At Onshore Supply Co. we make <strong>buying Australian</strong> actually happen.</h2>
+  </div>
+  <div class="statement-right">
+    <p>For years we've worked inside the Australian garment and printing industry — building relationships with the manufacturers, suppliers, and craftspeople who actually make things here.</p>
+    <p>We saw too many organisations want to buy local and give up because it was too complicated, too slow, or too expensive to navigate alone. We exist to fix that.</p>
+  </div>
+</section>
+
+<!-- OUR WORK / CLIENTS -->
+<section class="work-section">
+  <div class="work-bg-text">OUR WORK</div>
+  <div class="work-header">
+    <p class="section-eyebrow">What we make</p>
+    <p>From school uniforms to corporate merch — everything made on Australian soil by people we know personally.</p>
+  </div>
+  <div class="work-grid">
+    <div class="work-item">
+      <img src="/mnt/user-data/uploads/Bradmill-e1633160529528.webp" alt="Australian garment manufacturing">
+      <div class="work-item-label">
+        <span class="work-item-title">Uniforms &amp; Workwear</span>
+        <span class="work-item-tag">Made here</span>
+      </div>
+    </div>
+    <div class="work-item">
+      <img src="/mnt/user-data/uploads/hq720.jpg" alt="Australian industrial heritage">
+      <div class="work-item-label">
+        <span class="work-item-title">Branded Merchandise</span>
+        <span class="work-item-tag">Made here</span>
+      </div>
+    </div>
+    <div class="work-item">
+      <img src="/mnt/user-data/uploads/images__1_.jpeg" alt="Australian manufacturing history">
+      <div class="work-item-label">
+        <span class="work-item-title">Corporate Apparel</span>
+        <span class="work-item-tag">Made here</span>
+      </div>
+    </div>
+    <div class="work-item">
+      <img src="/mnt/user-data/uploads/Outback_Galactica.jpg" alt="Australia">
+      <div class="work-item-label">
+        <span class="work-item-title">Events &amp; Promotions</span>
+        <span class="work-item-tag">Made here</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="process">
+  <p class="section-eyebrow">How it works</p>
+  <h2>Simple process.<br>No surprises.</h2>
+  <div class="process-rows">
+    <div class="process-row">
+      <span class="process-num">01</span>
+      <span class="process-title">Tell us what you need</span>
+      <p class="process-desc">One conversation. No lengthy briefs, no confusing spec sheets. Just a straight chat about quantities, timeline, use case, and budget.</p>
+    </div>
+    <div class="process-row">
+      <span class="process-num">02</span>
+      <span class="process-title">We scope &amp; quote</span>
+      <p class="process-desc">We tap our network of verified Australian manufacturers to find the right fit. You get a clear quote — product cost plus our management fee. No hidden markups.</p>
+    </div>
+    <div class="process-row">
+      <span class="process-num">03</span>
+      <span class="process-title">We manage everything</span>
+      <p class="process-desc">From production briefing to quality checks to logistics — we own it. One point of contact throughout. No chasing, no confusion.</p>
+    </div>
+    <div class="process-row">
+      <span class="process-num">04</span>
+      <span class="process-title">Delivered. Done.</span>
+      <p class="process-desc">Your order arrives on time, to spec, made in Australia. We follow up to make sure you're happy. Most clients come back within six months.</p>
+    </div>
+  </div>
+</section>
+
+<!-- IMAGE BREAK -->
+<div class="image-break">
+  <img src="/mnt/user-data/uploads/uluru-ayers-rock-outback-australia.jpg" alt="Uluru — the heart of Australia">
+</div>
+
+<!-- ABOUT -->
+<section class="about-strip">
+  <div class="about-intro">
+    <h3>What the<br><em>fuck</em><br>happened<br>to the<br>Australian<br>garment<br>industry?</h3>
+    <div class="about-body">
+      <p>That's the question I started with. It took me to the last dye houses and knitting mills still running in this country. Places most people have never heard of, kept alive by a handful of people who refused to let it die. What I found wasn't a dead industry. <strong>It was one on its knees — skilled, capable, and starving for work.</strong></p>
+      <p>Here's what most people don't know: <strong>we still knit here. We still dye here. We still cut, make, and trim here.</strong> The craft never left. The infrastructure never fully collapsed. What left was the cotton.</p>
+      <p>Australia grows some of the finest cotton on earth. Then we ship it offshore to be spun into yarn — because we stopped doing that part decades ago. And when you lose spinning, you lose the thread that holds everything else together. Knitting mills with no yarn. Dye houses with nothing to dye. CMT operators waiting for work that goes to Bangladesh instead.</p>
+      <p>Every garment imported is a job that didn't happen here. A skill that doesn't get passed on. A capability this country quietly gives away.</p>
+      <p><strong>Onshore Supply Co. is the commercial engine that starts to reverse it.</strong> Every order we place goes to Australian hands. Every dollar stays in the supply chain we're rebuilding.</p>
+      <p>The bigger project is called Dirt to Shirt — rebuilding Australia's sovereign garment industry from the cotton gin to the finished product. Generating and deploying capital upstream, at the spinning stage, so that everything downstream — the knitting, the dyeing, the cutting, the making — has a reason to keep going.</p>
+      <p>This is the first chapter. If it's a story you want to be part of — as a client, a partner, or an investor — get in touch.</p>
+      <a href="#" class="btn-primary" style="margin-top: 12px;">Get in touch →</a>
+    </div>
+  </div>
+  <div class="about-fact-row">
+    <div class="about-fact">
+      <p class="about-fact-label">We still do this here</p>
+      <p class="about-fact-text">Knitting. Dyeing. Cutting. Making. Trimming.</p>
+    </div>
+    <div class="about-fact">
+      <p class="about-fact-label">The mission</p>
+      <p class="about-fact-text">Rebuild Australia's sovereign garment supply chain from dirt to shirt.</p>
+    </div>
+    <div class="about-mission">
+      <p class="about-mission-label">Project</p>
+      <p class="about-mission-text">Dirt<br>to<br>Shirt</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2>Ready to make<br>it onshore?</h2>
+  <p>Whether you're a client who needs garments made here, a partner who knows someone in the supply chain, or an investor who sees what we see — the conversation starts the same way.</p>
+  <a href="#" class="btn-dark">Get in touch →</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-logo">Onshore Supply Co.</div>
+    <div class="footer-tagline">Merch Made Here &nbsp;·&nbsp; Project Dirt to Shirt</div>
+  </div>
+  <div class="footer-right">onshoresupplyco.com.au</div>
+</footer>
+
+</body>
+</html>
